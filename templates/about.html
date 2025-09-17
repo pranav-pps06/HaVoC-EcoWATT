@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - HaVoC-EcoWATT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='images/ecowatt.png') }}" alt="EcoWATT Logo">
+            <span class="brand">HaVoC-EcoWATT</span>
+        </div>
+        <div class="nav-right">
+            <button onclick="window.location.href='{{ url_for('home') }}';">HOME</button>
+            <button class="active">ABOUT</button>
+            <button onclick="window.location.href='{{ url_for('login') }}';">LOGIN</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-about">
+        <div class="hero-content">
+            <h1>About HaVoC-EcoWATT</h1>
+            <p class="hero-subtitle">Revolutionizing Energy Management Through AI Innovation</p>
+        </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="mission-section">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <p>To empower individuals and organizations with intelligent energy management solutions that reduce costs, minimize environmental impact, and promote sustainable living through cutting-edge artificial intelligence technology.</p>
+        </div>
+    </div>
+
+    <!-- Story Section -->
+    <div class="story-section">
+        <div class="container">
+            <div class="story-content">
+                <div class="story-text">
+                    <h2>Our Story</h2>
+                    <p>HaVoC-EcoWATT was born from the vision of creating accessible energy optimization solutions that don't require expensive hardware installations. Our team recognized that while IoT devices are powerful, not everyone can afford or install complex monitoring systems.</p>
+                    <p>We developed an AI-driven platform that leverages simple user inputs to deliver sophisticated energy insights. By analyzing appliance usage patterns, electricity bills, and weather data, our system provides personalized recommendations that help users save money and reduce their carbon footprint.</p>
+                </div>
+                <div class="story-image">
+                    <img src="{{ url_for('static', filename='images/mainlogo.png') }}" alt="Our Story">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Values Section -->
+    <div class="values-section">
+        <div class="container">
+            <h2>Our Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h3>Sustainability</h3>
+                    <p>We believe in creating solutions that promote environmental responsibility and sustainable energy consumption.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🚀</div>
+                    <h3>Innovation</h3>
+                    <p>We continuously push the boundaries of AI technology to deliver smarter, more efficient energy management solutions.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Accessibility</h3>
+                    <p>Our solutions are designed to be user-friendly and accessible to everyone, regardless of technical expertise.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Community</h3>
+                    <p>We're committed to building a community of environmentally conscious individuals working together for a sustainable future.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="team-section">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/pranav.jpg') }}" alt="Team Member">
+                    <h3>Pranav P Sanjee</h3>
+                    <p class="role">frontend and backend developer</p>
+                    <p>lead development using latest technologies and stacks.<p>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/chandra.jpeg') }}" alt="Team Member">
+                    <h3>Chandranath</h3>
+                    <p class="role">UX/UI Designer</p>
+                    <p>Creates intuitive interfaces that make complex energy data accessible to all users.</p>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/chirag.PNG') }}" alt="Team Member">
+                    <h3>Chirag A G</h3>
+                    <p class="role">Energy Systems Expert</p>
+                    <p>Brings deep knowledge of energy markets and sustainability practices to our platform.</p>
+                </div>
+                <div class="team-member">
+                    <img src="{{ url_for('static', filename='images/kashish.jpeg') }}" alt="Team Member">
+                    <h3>Kashish S P</h3>
+                    <p class="role">Data Scientist</p>
+                    <p>Develops the analytical models that power our energy usage predictions and recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="contact-section">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <strong>Email:</strong> info@havoc-ecowatt.com
+                    </div>
+                    <div class="contact-item">
+                        <strong>Phone:</strong> +91 8123456789
+                    </div>
+                    <div class="contact-item">
+                        <strong>Address:</strong> main road,near mg circle bengaluru.
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form>
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p>&copy; 2025 HaVoC-EcoWATT - The Dynamic Energy Optimizer. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,429 @@
+/* style5.css for HaVoC-EcoWATT Forgot Password Page */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f8fffe 0%, #e8f8f5 100%);
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navigation Styles */
+nav {
+    background: linear-gradient(90deg, #1a5f3f 0%, #2e8b57 100%);
+    box-shadow: 0 2px 10px rgba(26,95,63,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-left img {
+    height: 35px;
+    border-radius: 8px;
+}
+
+.nav-left .brand {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-right button {
+    background: transparent;
+    color: #fff;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Forgot Password Container */
+.forgot-password-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: calc(100vh - 120px);
+}
+
+.forgot-password-box {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(26,95,63,0.1);
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid rgba(26,95,63,0.05);
+    text-align: center;
+}
+
+/* Header Styles */
+.forgot-password-header {
+    margin-bottom: 40px;
+}
+
+.icon-container {
+    margin-bottom: 20px;
+}
+
+.lock-icon {
+    width: 64px;
+    height: 64px;
+    color: #2e8b57;
+    background: linear-gradient(135deg, #f0f8f6 0%, #e8f5f0 100%);
+    border-radius: 50%;
+    padding: 16px;
+}
+
+.forgot-password-header h1 {
+    font-size: 28px;
+    color: #1a5f3f;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.forgot-password-header p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Step Container */
+.step-container {
+    text-align: left;
+}
+
+/* Form Styles */
+.forgot-password-form,
+.reset-password-form {
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a5f3f;
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 18px;
+    border: 2px solid #e8f5f0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: #fafffe;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #2e8b57;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(46,139,87,0.1);
+}
+
+.input-group input::placeholder {
+    color: #999;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.strength-weak {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.strength-medium {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.strength-strong {
+    color: #28a745;
+    font-weight: 600;
+}
+
+/* Buttons */
+.reset-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #1a5f3f 0%, #2e8b57 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+}
+
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(26,95,63,0.3);
+}
+
+.reset-btn:active {
+    transform: translateY(0);
+}
+
+.resend-btn {
+    background: transparent;
+    color: #2e8b57;
+    border: 2px solid #2e8b57;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.resend-btn:hover {
+    background: #2e8b57;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Success Message */
+.success-message {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.success-icon {
+    margin-bottom: 20px;
+}
+
+.success-icon svg {
+    width: 64px;
+    height: 64px;
+    color: #28a745;
+    background: linear-gradient(135deg, #f0f8f6 0%, #e8f5f0 100%);
+    border-radius: 50%;
+    padding: 16px;
+}
+
+.success-message h2 {
+    font-size: 24px;
+    color: #1a5f3f;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.success-message p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.success-message .instruction {
+    font-size: 14px;
+    color: #888;
+    font-style: italic;
+}
+
+.success-message strong {
+    color: #2e8b57;
+    font-weight: 600;
+}
+
+/* Reset Header */
+.reset-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.reset-header h2 {
+    font-size: 24px;
+    color: #1a5f3f;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.reset-header p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Resend Section */
+.resend-section {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8fffe 0%, #f0f8f6 100%);
+    border-radius: 10px;
+    border: 1px solid #e8f5f0;
+}
+
+.resend-section p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* Back to Login */
+.back-to-login {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #f0f8f6;
+}
+
+.back-to-login p {
+    font-size: 14px;
+    color: #666;
+}
+
+.login-link {
+    color: #2e8b57;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.login-link:hover {
+    color: #1a5f3f;
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    color: #ddd;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+    margin-top: auto;
+}
+
+/* Animation for step transitions */
+.step-container {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav {
+        padding: 0 20px;
+        height: 55px;
+    }
+    
+    .nav-left .brand {
+        font-size: 18px;
+    }
+    
+    .nav-right {
+        gap: 10px;
+    }
+    
+    .nav-right button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+    
+    .forgot-password-container {
+        padding: 20px 15px;
+    }
+    
+    .forgot-password-box {
+        padding: 40px 30px;
+    }
+    
+    .forgot-password-header h1 {
+        font-size: 24px;
+    }
+    
+    .lock-icon,
+    .success-icon svg {
+        width: 56px;
+        height: 56px;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .forgot-password-box {
+        padding: 30px 20px;
+    }
+    
+    .forgot-password-header h1 {
+        font-size: 22px;
+    }
+    
+    .forgot-password-header p {
+        font-size: 14px;
+    }
+    
+    .input-group input {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+    
+    .reset-btn {
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+    
+    .lock-icon,
+    .success-icon svg {
+        width: 48px;
+        height: 48px;
+        padding: 12px;
+    }
+}

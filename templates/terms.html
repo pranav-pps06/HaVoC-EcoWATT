@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms and Conditions - HaVoC-EcoWATT</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fffe 0%, #e8f8f5 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background: linear-gradient(90deg, #1a5f3f 0%, #2e8b57 100%);
+            box-shadow: 0 2px 10px rgba(26,95,63,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-left img {
+            height: 35px;
+            border-radius: 8px;
+        }
+
+        .nav-left .brand {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-right button {
+            background: transparent;
+            color: #fff;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 8px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Main Container */
+        .terms-container {
+            flex: 1;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .terms-box {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(26,95,63,0.1);
+            padding: 50px 40px;
+            border: 1px solid rgba(26,95,63,0.05);
+        }
+
+        /* Header */
+        .terms-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e8f5f0;
+        }
+
+        .terms-header h1 {
+            font-size: 36px;
+            color: #1a5f3f;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .terms-header .last-updated {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Content Styles */
+        .terms-content h2 {
+            font-size: 24px;
+            color: #1a5f3f;
+            font-weight: 600;
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f8f6;
+        }
+
+        .terms-content h3 {
+            font-size: 20px;
+            color: #2e8b57;
+            font-weight: 600;
+            margin: 25px 0 12px 0;
+        }
+
+        .terms-content p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 15px;
+            text-align: justify;
+            line-height: 1.7;
+        }
+
+        .terms-content ul {
+            margin: 15px 0 15px 30px;
+            color: #555;
+        }
+
+        .terms-content li {
+            font-size: 16px;
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .terms-content strong {
+            color: #1a5f3f;
+            font-weight: 600;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            background: linear-gradient(135deg, #f0f8f6 0%, #e8f5f0 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 4px solid #2e8b57;
+        }
+
+        .contact-info h3 {
+            color: #1a5f3f;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p {
+            margin-bottom: 8px;
+        }
+
+        .contact-info a {
+            color: #2e8b57;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Back Button */
+        .back-button {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #1a5f3f 0%, #2e8b57 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26,95,63,0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: #ddd;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 14px;
+            margin-top: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                padding: 0 20px;
+                height: 55px;
+            }
+            
+            .nav-left .brand {
+                font-size: 18px;
+            }
+            
+            .nav-right {
+                gap: 10px;
+            }
+            
+            .nav-right button {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .terms-container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            .terms-box {
+                padding: 30px 25px;
+            }
+            
+            .terms-header h1 {
+                font-size: 28px;
+            }
+            
+            .terms-content h2 {
+                font-size: 20px;
+            }
+            
+            .terms-content h3 {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .terms-box {
+                padding: 25px 20px;
+            }
+            
+            .terms-header h1 {
+                font-size: 24px;
+            }
+            
+            .terms-content p,
+            .terms-content li {
+                font-size: 14px;
+            }
+            
+            .contact-info {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-left">
+            <img src="../images/ecowatt.png" alt="EcoWATT Logo">
+            <span class="brand">HaVoC-EcoWATT</span>
+        </div>
+        <div class="nav-right">
+            <button onclick="window.location.href='index.html'">HOME</button>
+            <button onclick="window.location.href='about.html'">ABOUT</button>
+            <button onclick="window.location.href='login.html'">LOGIN</button>
+        </div>
+    </nav>
+
+    <!-- Terms Container -->
+    <div class="terms-container">
+        <div class="terms-box">
+            <div class="terms-header">
+                <h1>Terms and Conditions</h1>
+                <p class="last-updated">Last updated: September 17, 2025</p>
+            </div>
+
+            <div class="terms-content">
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing and using HaVoC-EcoWATT ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+
+                <h2>2. Description of Service</h2>
+                <p>HaVoC-EcoWATT is an AI-powered energy optimization platform that helps households and offices manage their energy consumption through data analysis and intelligent recommendations. Our service includes:</p>
+                <ul>
+                    <li>Energy usage analysis and predictions</li>
+                    <li>Cost-saving recommendations</li>
+                    <li>Interactive dashboards and visualizations</li>
+                    <li>Peak hour predictions</li>
+                    <li>Appliance optimization suggestions</li>
+                </ul>
+
+                <h2>3. User Accounts and Registration</h2>
+                <h3>3.1 Account Creation</h3>
+                <p>To use certain features of our Service, you must register for an account. You agree to provide accurate, current, and complete information during the registration process.</p>
+                
+                <h3>3.2 Account Security</h3>
+                <p>You are responsible for safeguarding your account credentials and for all activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account.</p>
+
+                <h2>4. User Data and Privacy</h2>
+                <h3>4.1 Data Collection</h3>
+                <p>We collect information you provide directly to us, including:</p>
+                <ul>
+                    <li>Personal information (name, email, username)</li>
+                    <li>Appliance information and usage patterns</li>
+                    <li>Electricity bill data</li>
+                    <li>Energy consumption preferences</li>
+                </ul>
+
+                <h3>4.2 Data Usage</h3>
+                <p>Your data is used solely to provide our energy optimization services. We do not sell, rent, or share your personal information with third parties without your explicit consent, except as outlined in our Privacy Policy.</p>
+
+                <h3>4.3 Data Security</h3>
+                <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+
+                <h2>5. Acceptable Use</h2>
+                <p>You agree to use HaVoC-EcoWATT only for lawful purposes and in accordance with these Terms. You agree not to:</p>
+                <ul>
+                    <li>Use the Service for any illegal or unauthorized purpose</li>
+                    <li>Attempt to gain unauthorized access to any portion of the Service</li>
+                    <li>Interfere with or disrupt the Service or servers</li>
+                    <li>Upload or transmit viruses or malicious code</li>
+                    <li>Impersonate any person or entity</li>
+                </ul>
+
+                <h2>6. Service Availability</h2>
+                <p>While we strive to maintain high availability, we do not guarantee that the Service will be available at all times. The Service may be temporarily unavailable due to maintenance, updates, or technical issues.</p>
+
+                <h2>7. Intellectual Property</h2>
+                <p>The Service and its original content, features, and functionality are owned by HaVoC-EcoWATT and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
+
+                <h2>8. Disclaimers and Limitations</h2>
+                <h3>8.1 Service Accuracy</h3>
+                <p>While we strive to provide accurate energy optimization recommendations, the effectiveness of our suggestions may vary based on individual circumstances, appliance conditions, and external factors.</p>
+
+                <h3>8.2 Limitation of Liability</h3>
+                <p><strong>To the maximum extent permitted by law, HaVoC-EcoWATT shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or energy savings.</strong></p>
+
+                <h2>9. Termination</h2>
+                <p>We may terminate or suspend your account and access to the Service immediately, without prior notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties.</p>
+
+                <h2>10. Changes to Terms</h2>
+                <p>We reserve the right to modify these Terms at any time. We will notify users of any material changes by posting the new Terms on this page and updating the "Last updated" date.</p>
+
+                <h2>11. Governing Law</h2>
+                <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which HaVoC-EcoWATT operates, without regard to conflict of law provisions.</p>
+
+                <h2>12. Contact Information</h2>
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>If you have any questions about these Terms and Conditions, please contact us:</p>
+                    <p><strong>Email:</strong> <a href="mailto:legal@havoc-ecowatt.com">legal@havoc-ecowatt.com</a></p>
+                    <p><strong>Phone:</strong> +91 8123456789</p>
+                    <p><strong>Address:</strong> main road,near mg circle bengaluru.</p>
+                    <p><strong>Support Hours:</strong> Monday - Friday, 9:00 AM - 6:00 PM IST</p>
+                </div>
+
+                <div class="back-button">
+                    <a href="javascript:history.back()" class="back-btn">← Back to Previous Page</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 HaVoC-EcoWATT - The Dynamic Energy Optimizer. All rights reserved.</p>
+    </div>
+</body>
+</html>

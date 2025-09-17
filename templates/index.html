@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HaVoC-EcoWATT - The Dynamic Energy Optimizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='images/ecowatt.png') }}" alt="EcoWATT Logo">
+            <span class="brand">HaVoC-EcoWATT</span>
+        </div>
+        <div class="nav-right">
+            <button>HOME</button>
+            <button onclick="location.href='{{ url_for('about') }}'">ABOUT</button>
+            <button onclick="location.href='{{ url_for('login') }}'">LOGIN</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Welcome to HaVoC-EcoWATT!</h1>
+            <p>HaVoC-EcoWATT helps homes and offices optimize energy use with AI, using simple user data instead of IoT meters. It predicts peak hours, suggests cost-saving schedules, and shows usage trends—empowering users to save money and reduce their carbon footprint through smart software insights.</p>
+        </div>
+        <div class="hero-img">
+            <img src="{{ url_for('static', filename='images/mainlogo.png') }}" alt="HaVoC-EcoWATT Main Logo">
+        </div>
+    </div>
+
+    <!-- Description Section -->
+    <div class="description">
+        <h2>About Our Platform</h2>
+        <p>HaVoC-EcoWATT is a forward-thinking platform designed to revolutionize energy management for homes and offices. By harnessing the power of artificial intelligence, our solution analyzes user-input data—such as appliance schedules, electricity bills, and local weather information—to deliver personalized recommendations for energy savings. The system identifies peak usage periods, suggests optimal times for running devices, and provides clear visualizations to help users understand their consumption patterns. With HaVoC-EcoWATT, users can make informed decisions to lower costs, reduce environmental impact, and contribute to a more sustainable future—all without the need for complex hardware installations.</p>
+    </div>
+
+    <!-- Key Features Section -->
+    <div class="keyfeatures">
+        <h2>Key Features</h2>
+        <ul>
+            <li>AI-powered energy optimization</li>
+            <li>User-friendly data input (no IoT required)</li>
+            <li>Peak hour prediction and analysis</li>
+            <li>Cost-saving schedule suggestions</li>
+            <li>Interactive usage dashboards</li>
+            <li>Eco-friendly recommendations</li>
+            <li>Weather-based energy forecasting</li>
+            <li>Real-time cost calculations</li>
+        </ul>
+    </div>
+
+    <!-- Get Started Section -->
+    <div class="getstarted">
+        <h2>Get Started Today</h2>
+        <p>Ready to optimize your energy usage and reduce your environmental impact? Join thousands of users who are already saving money with HaVoC-EcoWATT.</p>
+        <button onclick="location.href='{{ url_for('newuser') }}'">Get Started Now</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="copyright">
+        &copy; 2025 HaVoC-EcoWATT - The Dynamic Energy Optimizer. All rights reserved.
+    </div>
+</body>
+</html>

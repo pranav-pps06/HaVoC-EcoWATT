@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HaVoC-EcoWATT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='images/ecowatt.png') }}" alt="EcoWATT Logo">
+            <span class="brand">HaVoC-EcoWATT</span>
+        </div>
+        <div class="nav-right">
+            <button onclick="window.location.href='{{ url_for('home') }}'">HOME</button>
+            <button onclick="window.location.href='{{ url_for('about') }}'">ABOUT</button>
+            <button class="active">LOGIN</button>
+        </div>
+    </nav>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to your HaVoC-EcoWATT account</p>
+            </div>
+            
+            <form class="login-form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                    <a href="{{ url_for('forgotpassword') }}" class="forgot-password">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Don't have an account? <a href="{{ url_for('newuser') }}" class="new-user">Create New Account</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 HaVoC-EcoWATT - The Dynamic Energy Optimizer. All rights reserved.</p>
+    </div>
+</body>
+</html>

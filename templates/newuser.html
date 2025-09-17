@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - HaVoC-EcoWATT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style4.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='images/ecowatt.png') }}" alt="EcoWATT Logo">
+            <span class="brand">HaVoC-EcoWATT</span>
+        </div>
+        <div class="nav-right">
+            <button onclick="window.location.href='{{ url_for('home') }}';">HOME</button>
+            <button onclick="window.location.href='{{ url_for('about') }}';">ABOUT</button>
+            <button onclick="window.location.href='{{ url_for('login') }}';">LOGIN</button>
+        </div>
+    </nav>
+
+    <!-- Registration Container -->
+    <div class="registration-container">
+        <div class="registration-box">
+            <div class="registration-header">
+                <h1>Create Your Account</h1>
+                <p>Join HaVoC-EcoWATT to start optimizing your energy usage</p>
+            </div>
+            
+            <form class="registration-form" id="registrationForm">
+                <!-- Section 1: User Information -->
+                <div class="form-section">
+                    <h2>Personal Information</h2>
+                    <div class="input-row">
+                        <div class="input-group half">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="input-group half">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" placeholder="Choose a username" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group half">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Create a password" required>
+                        </div>
+                        <div class="input-group half">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Appliance Information -->
+                <div class="form-section">
+                    <h2>Appliance Information</h2>
+                    <p class="section-description">Add your household appliances to help us optimize your energy usage</p>
+                    
+                    <div id="appliancesContainer">
+                        <div class="appliance-item">
+                            <div class="appliance-header">
+                                <h3>Appliance 1</h3>
+                                <button type="button" class="remove-appliance" onclick="removeAppliance(this)" style="display: none;">Remove</button>
+                            </div>
+                            <div class="input-row">
+                                <div class="input-group third">
+                                    <label for="appliance_name_1">Appliance Name</label>
+                                    <input type="text" id="appliance_name_1" name="appliance_name[]" placeholder="e.g., Refrigerator" required>
+                                </div>
+                                <div class="input-group third">
+                                    <label for="power_usage_1">Power Usage (W)</label>
+                                    <input type="number" id="power_usage_1" name="power_usage[]" placeholder="e.g., 150" min="1" required>
+                                </div>
+                                <div class="input-group third">
+                                    <label for="power_rating_1">Power Rating (W)</label>
+                                    <input type="number" id="power_rating_1" name="power_rating[]" placeholder="e.g., 200" min="1" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="add-appliance-btn" onclick="addAppliance()">
+                        <span>+</span> Add Another Appliance
+                    </button>
+                </div>
+
+                <!-- Terms and Submit -->
+                <div class="form-section">
+                    <div class="terms-section">
+                        <label class="terms-checkbox">
+                            <input type="checkbox" id="terms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="{{ url_for('terms') }}" class="terms-link">Terms of Service and Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Create Account</button>
+                </div>
+            </form>
+            
+            <div class="registration-footer">
+                <p>Already have an account? <a href="{{ url_for('login') }}" class="login-link">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2025 HaVoC-EcoWATT - The Dynamic Energy Optimizer. All rights reserved.</p>
+    </div>
+
+    <script>
+        let applianceCount = 1;
+
+        function addAppliance() {
+            applianceCount++;
+            const container = document.getElementById('appliancesContainer');
+            
+            const applianceItem = document.createElement('div');
+            applianceItem.className = 'appliance-item';
+            applianceItem.innerHTML = `
+                <div class="appliance-header">
+                    <h3>Appliance ${applianceCount}</h3>
+                    <button type="button" class="remove-appliance" onclick="removeAppliance(this)">Remove</button>
+                </div>
+                <div class="input-row">
+                    <div class="input-group third">
+                        <label for="appliance_name_${applianceCount}">Appliance Name</label>
+                        <input type="text" id="appliance_name_${applianceCount}" name="appliance_name[]" placeholder="e.g., Air Conditioner" required>
+                    </div>
+                    <div class="input-group third">
+                        <label for="power_usage_${applianceCount}">Power Usage (W)</label>
+                        <input type="number" id="power_usage_${applianceCount}" name="power_usage[]" placeholder="e.g., 1500" min="1" required>
+                    </div>
+                    <div class="input-group third">
+                        <label for="power_rating_${applianceCount}">Power Rating (W)</label>
+                        <input type="number" id="power_rating_${applianceCount}" name="power_rating[]" placeholder="e.g., 1800" min="1" required>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(applianceItem);
+            updateRemoveButtons();
+        }
+
+        function removeAppliance(button) {
+            const applianceItem = button.closest('.appliance-item');
+            applianceItem.remove();
+            updateApplianceNumbers();
+            updateRemoveButtons();
+        }
+
+        function updateApplianceNumbers() {
+            const appliances = document.querySelectorAll('.appliance-item');
+            appliances.forEach((appliance, index) => {
+                const header = appliance.querySelector('h3');
+                header.textContent = `Appliance ${index + 1}`;
+            });
+            applianceCount = appliances.length;
+        }
+
+        function updateRemoveButtons() {
+            const removeButtons = document.querySelectorAll('.remove-appliance');
+            removeButtons.forEach(button => {
+                button.style.display = removeButtons.length > 1 ? 'block' : 'none';
+            });
+        }
+
+        // Form validation
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                return false;
+            }
+            
+            // Here you would typically send the data to your server
+            e.preventDefault();
+            alert('Account created successfully! (This is a demo)');
+        });
+    </script>
+</body>
+</html>
