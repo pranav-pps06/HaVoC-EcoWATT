@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Analytics - HaVoC EcoWATT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='analytics.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>HaVoC EcoWATT</h2>
+                <p>Energy Analytics</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/appliances"><i class="fas fa-plug"></i> Appliances</a></li>
+                <li><a href="/analytics" class="active"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/scheduling"><i class="fas fa-clock"></i> Scheduling</a></li>
+                <li><a href="/reports"><i class="fas fa-file-alt"></i> Reports</a></li>
+                <li><a href="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="user-section">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Welcome, User!</span>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="page-header">
+                <div class="header-content">
+                    <h1><i class="fas fa-chart-line"></i> Energy Analytics</h1>
+                    <p>Detailed insights into your energy consumption patterns</p>
+                </div>
+                <div class="header-controls">
+                    <div class="date-range-selector">
+                        <select id="dateRange" onchange="updateDateRange()">
+                            <option value="24h">Last 24 Hours</option>
+                            <option value="7d">Last 7 Days</option>
+                            <option value="30d" selected>Last 30 Days</option>
+                            <option value="90d">Last 3 Months</option>
+                            <option value="1y">Last Year</option>
+                        </select>
+                    </div>
+                    <button class="export-btn" onclick="exportAnalytics()">
+                        <i class="fas fa-download"></i> Export Data
+                    </button>
+                </div>
+            </header>
+
+            <!-- Analytics Overview Cards -->
+            <section class="overview-section">
+                <div class="overview-cards">
+                    <div class="overview-card energy">
+                        <div class="card-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Total Energy</h3>
+                            <div class="metric-value" id="totalEnergy">1,247 kWh</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-down"></i> 12% vs last period
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card cost">
+                        <div class="card-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Energy Cost</h3>
+                            <div class="metric-value" id="totalCost">$187.50</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-down"></i> 8% vs last period
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card efficiency">
+                        <div class="card-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Efficiency Score</h3>
+                            <div class="metric-value" id="efficiencyScore">85%</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-up"></i> 5% vs last period
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card carbon">
+                        <div class="card-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Carbon Footprint</h3>
+                            <div class="metric-value" id="carbonFootprint">542 kg CO₂</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-down"></i> 15% vs last period
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="charts-grid">
+                    <!-- Energy Consumption Trend -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Energy Consumption Trend</h3>
+                            <div class="chart-controls">
+                                <button class="chart-type-btn active" data-type="line">Line</button>
+                                <button class="chart-type-btn" data-type="bar">Bar</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="consumptionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Appliance Breakdown -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Energy by Appliance</h3>
+                            <div class="chart-controls">
+                                <button class="chart-type-btn active" data-type="doughnut">Doughnut</button>
+                                <button class="chart-type-btn" data-type="pie">Pie</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="applianceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Cost Analysis -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Daily Cost Analysis</h3>
+                            <div class="chart-controls">
+                                <button class="chart-type-btn active" data-type="bar">Bar</button>
+                                <button class="chart-type-btn" data-type="line">Line</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="costChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Peak Usage Hours -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Peak Usage Hours</h3>
+                            <div class="chart-controls">
+                                <button class="chart-type-btn active" data-type="radar">Radar</button>
+                                <button class="chart-type-btn" data-type="bar">Bar</button>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="peakUsageChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Insights Section -->
+            <section class="insights-section">
+                <div class="insights-header">
+                    <h3>AI-Powered Insights</h3>
+                    <p>Smart recommendations based on your energy usage patterns</p>
+                </div>
+                <div class="insights-grid">
+                    <div class="insight-card energy-saving">
+                        <div class="insight-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Energy Saving Opportunity</h4>
+                            <p>Your AC is consuming 23% more energy than optimal. Consider adjusting the temperature by 2°C to save approximately $15/month.</p>
+                            <div class="insight-actions">
+                                <button class="apply-btn">Apply Suggestion</button>
+                                <button class="dismiss-btn">Dismiss</button>
+                            </div>
+                        </div>
+                        <div class="insight-impact">
+                            <span class="impact-label">Potential Savings</span>
+                            <span class="impact-value">$15/month</span>
+                        </div>
+                    </div>
+
+                    <div class="insight-card usage-pattern">
+                        <div class="insight-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Peak Usage Alert</h4>
+                            <p>Your energy usage peaks between 6-9 PM when rates are highest. Consider shifting some activities to off-peak hours.</p>
+                            <div class="insight-actions">
+                                <button class="schedule-btn">Auto-Schedule</button>
+                                <button class="learn-more-btn">Learn More</button>
+                            </div>
+                        </div>
+                        <div class="insight-impact">
+                            <span class="impact-label">Peak Reduction</span>
+                            <span class="impact-value">18%</span>
+                        </div>
+                    </div>
+
+                    <div class="insight-card maintenance">
+                        <div class="insight-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="insight-content">
+                            <h4>Maintenance Reminder</h4>
+                            <p>Your refrigerator's efficiency has decreased by 8% over the past month. It may need maintenance or cleaning.</p>
+                            <div class="insight-actions">
+                                <button class="schedule-maintenance-btn">Schedule Maintenance</button>
+                                <button class="remind-later-btn">Remind Later</button>
+                            </div>
+                        </div>
+                        <div class="insight-impact">
+                            <span class="impact-label">Efficiency Drop</span>
+                            <span class="impact-value">8%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Section -->
+            <section class="comparison-section">
+                <div class="comparison-header">
+                    <h3>Usage Comparison</h3>
+                    <div class="comparison-controls">
+                        <select id="comparisonType">
+                            <option value="previous">Previous Period</option>
+                            <option value="average">Average Household</option>
+                            <option value="target">Target Goal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="comparison-chart">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Detailed Analytics Table -->
+            <section class="table-section">
+                <div class="table-header">
+                    <h3>Detailed Analytics</h3>
+                    <div class="table-controls">
+                        <input type="text" id="tableSearch" placeholder="Search appliances...">
+                        <select id="tableFilter">
+                            <option value="">All Appliances</option>
+                            <option value="air_conditioner">Air Conditioner</option>
+                            <option value="refrigerator">Refrigerator</option>
+                            <option value="washing_machine">Washing Machine</option>
+                            <option value="water_heater">Water Heater</option>
+                            <option value="television">Television</option>
+                            <option value="microwave">Microwave</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="analytics-table">
+                    <table id="analyticsTable">
+                        <thead>
+                            <tr>
+                                <th>Appliance</th>
+                                <th>Type</th>
+                                <th>Energy (kWh)</th>
+                                <th>Cost ($)</th>
+                                <th>Usage Hours</th>
+                                <th>Efficiency</th>
+                                <th>Trend</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analyticsTableBody">
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='analytics.js') }}"></script>
+</body>
+</html>

@@ -28,24 +28,45 @@
                 <p>Join HaVoC-EcoWATT to start optimizing your energy usage</p>
             </div>
             
-            <form class="registration-form" id="registrationForm">
+            <form class="registration-form" id="registrationForm" method="POST" action="{{ url_for('newuser') }}">
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <div class="flash-messages">
+                            {% for category, message in messages %}
+                                <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                
                 <!-- Section 1: User Information -->
                 <div class="form-section">
                     <h2>Personal Information</h2>
                     <div class="input-row">
                         <div class="input-group half">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" required>
                         </div>
                         <div class="input-group half">
-                            <label for="username">Username</label>
-                            <input type="text" id="username" name="username" placeholder="Choose a username" required>
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" placeholder="Enter your last name" required>
                         </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Choose a username" required>
                     </div>
                     
                     <div class="input-group">
                         <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
                     </div>
                     
                     <div class="input-row">
@@ -54,8 +75,28 @@
                             <input type="password" id="password" name="password" placeholder="Create a password" required>
                         </div>
                         <div class="input-group half">
-                            <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                            <label for="confirm_password">Confirm Password</label>
+                            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" name="address" placeholder="Enter your address">
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group third">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" placeholder="Enter your city">
+                        </div>
+                        <div class="input-group third">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" placeholder="Enter your state">
+                        </div>
+                        <div class="input-group third">
+                            <label for="zip_code">Zip Code</label>
+                            <input type="text" id="zip_code" name="zip_code" placeholder="Enter zip code">
                         </div>
                     </div>
                 </div>
@@ -97,7 +138,7 @@
                 <div class="form-section">
                     <div class="terms-section">
                         <label class="terms-checkbox">
-                            <input type="checkbox" id="terms" required>
+                            <input type="checkbox" id="terms" name="terms" required>
                             <span class="checkmark"></span>
                             I agree to the <a href="{{ url_for('terms') }}" class="terms-link">Terms of Service and Privacy Policy</a>
                         </label>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appliances - HaVoC-EcoWATT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='appliances.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='images/ecowatt.png') }}" alt="EcoWATT Logo" class="logo">
+            <h1 class="brand">HaVoC-EcoWATT</h1>
+        </div>
+        <div class="header-center">
+            <h2 class="dashboard-title">Appliance Management</h2>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span class="user-name">Welcome, User</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item">
+                        <a href="{{ url_for('dashboard') }}" class="nav-link">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="{{ url_for('appliances') }}" class="nav-link">
+                            <i class="fas fa-plug"></i>
+                            <span>Appliances</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('analytics') }}" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('scheduling') }}" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Smart Schedule</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('reports') }}" class="nav-link">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('settings') }}" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Appliances Content -->
+        <main class="appliances-content">
+            <!-- Action Bar -->
+            <section class="action-bar">
+                <div class="search-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search appliances..." id="searchAppliances">
+                    </div>
+                    <select class="filter-dropdown" id="typeFilter">
+                        <option value="">All Types</option>
+                        <option value="air_conditioner">Air Conditioner</option>
+                        <option value="refrigerator">Refrigerator</option>
+                        <option value="washing_machine">Washing Machine</option>
+                        <option value="water_heater">Water Heater</option>
+                        <option value="television">Television</option>
+                        <option value="microwave">Microwave</option>
+                    </select>
+                    <select class="filter-dropdown" id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="on">Active</option>
+                        <option value="off">Inactive</option>
+                    </select>
+                </div>
+                <button class="add-appliance-btn" onclick="openAddApplianceModal()">
+                    <i class="fas fa-plus"></i> Add Appliance
+                </button>
+            </section>
+
+            <!-- Appliances Grid -->
+            <section class="appliances-grid" id="appliancesGrid">
+                <!-- Appliance Cards will be loaded here -->
+            </section>
+
+            <!-- Appliance Details Panel -->
+            <section class="details-panel" id="detailsPanel">
+                <div class="panel-header">
+                    <h3>Appliance Details</h3>
+                    <button class="close-panel" onclick="closeDetailsPanel()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="panel-content" id="panelContent">
+                    <p class="select-message">Select an appliance to view details</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Appliance Modal -->
+    <div id="addApplianceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Appliance</h3>
+                <span class="close" onclick="closeAddApplianceModal()">&times;</span>
+            </div>
+            <form id="addApplianceForm" class="modal-form">
+                <div class="form-group">
+                    <label for="applianceName">Appliance Name</label>
+                    <input type="text" id="applianceName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="applianceType">Type</label>
+                    <select id="applianceType" name="type" required>
+                        <option value="">Select Type</option>
+                        <option value="air_conditioner">Air Conditioner</option>
+                        <option value="refrigerator">Refrigerator</option>
+                        <option value="washing_machine">Washing Machine</option>
+                        <option value="water_heater">Water Heater</option>
+                        <option value="television">Television</option>
+                        <option value="microwave">Microwave</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="powerRating">Power Rating (Watts)</label>
+                    <input type="number" id="powerRating" name="power_rating" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" placeholder="e.g., Living Room">
+                </div>
+                <div class="form-group">
+                    <label for="brand">Brand</label>
+                    <input type="text" id="brand" name="brand" placeholder="e.g., Samsung">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeAddApplianceModal()">Cancel</button>
+                    <button type="submit" class="submit-btn">Add Appliance</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Appliance Modal -->
+    <div id="editApplianceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Appliance</h3>
+                <span class="close" onclick="closeEditApplianceModal()">&times;</span>
+            </div>
+            <form id="editApplianceForm" class="modal-form">
+                <input type="hidden" id="editApplianceId">
+                <div class="form-group">
+                    <label for="editApplianceName">Appliance Name</label>
+                    <input type="text" id="editApplianceName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPowerRating">Power Rating (Watts)</label>
+                    <input type="number" id="editPowerRating" name="power_rating" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="editLocation">Location</label>
+                    <input type="text" id="editLocation" name="location">
+                </div>
+                <div class="form-group">
+                    <label for="editBrand">Brand</label>
+                    <input type="text" id="editBrand" name="brand">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="closeEditApplianceModal()">Cancel</button>
+                    <button type="submit" class="submit-btn">Update Appliance</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Pass session data to JavaScript
+        window.sessionData = {
+            userId: {{ session.user_id }},
+            username: "{{ session.username or '' }}",
+            userDisplayName: "{{ session.user_name or session.username or 'User' }}"
+        };
+    </script>
+    <script src="{{ url_for('static', filename='appliances.js') }}?v=2"></script>
+</body>
+</html>

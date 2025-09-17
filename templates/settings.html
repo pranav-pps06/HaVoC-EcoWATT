@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - HaVoC EcoWATT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='settings.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>HaVoC EcoWATT</h2>
+                <p>Settings & Preferences</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/appliances"><i class="fas fa-plug"></i> Appliances</a></li>
+                <li><a href="/analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/scheduling"><i class="fas fa-clock"></i> Scheduling</a></li>
+                <li><a href="/reports"><i class="fas fa-file-alt"></i> Reports</a></li>
+                <li><a href="/settings" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="user-section">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Welcome, User!</span>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1><i class="fas fa-cog"></i> Settings & Preferences</h1>
+                <p>Customize your HaVoC EcoWATT experience</p>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="settings-card">
+                    <div class="card-header">
+                        <h2>User Preferences & Configuration</h2>
+                        <p>Manage your account settings and system preferences</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="feature-placeholder">
+                            <i class="fas fa-user-cog"></i>
+                            <h3>Advanced Settings & Configuration</h3>
+                            <p>Personalize your energy management experience with custom preferences, notification settings, energy goals, and ML algorithm fine-tuning.</p>
+                            <div class="coming-soon">
+                                <span class="badge">ML-Powered Personalization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+</html>

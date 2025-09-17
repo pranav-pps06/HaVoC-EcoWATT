@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Reports - HaVoC EcoWATT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='reports.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>HaVoC EcoWATT</h2>
+                <p>Energy Reports</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="/appliances"><i class="fas fa-plug"></i> Appliances</a></li>
+                <li><a href="/analytics"><i class="fas fa-chart-line"></i> Analytics</a></li>
+                <li><a href="/scheduling"><i class="fas fa-clock"></i> Scheduling</a></li>
+                <li><a href="/reports" class="active"><i class="fas fa-file-alt"></i> Reports</a></li>
+                <li><a href="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+            <div class="user-section">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Welcome, User!</span>
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1><i class="fas fa-file-alt"></i> Energy Reports</h1>
+                <p>Comprehensive energy usage and billing reports</p>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="reports-card">
+                    <div class="card-header">
+                        <h2>Advanced Energy Reports</h2>
+                        <p>Detailed billing analysis and energy consumption reports</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="feature-placeholder">
+                            <i class="fas fa-chart-bar"></i>
+                            <h3>Detailed Analytics & Reporting</h3>
+                            <p>Generate comprehensive reports with energy usage patterns, cost breakdowns, and efficiency metrics powered by machine learning insights.</p>
+                            <div class="coming-soon">
+                                <span class="badge">Enhanced with ML Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function logout() {
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+</html>

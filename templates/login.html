@@ -28,7 +28,18 @@
                 <p>Sign in to your HaVoC-EcoWATT account</p>
             </div>
             
-            <form class="login-form">
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'error' if category == 'error' else 'success' }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form class="login-form" method="POST" action="{{ url_for('login') }}">
                 <div class="input-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" placeholder="Enter your username" required>
@@ -41,7 +52,7 @@
                 
                 <div class="form-options">
                     <label class="remember-me">
-                        <input type="checkbox" id="remember">
+                        <input type="checkbox" id="remember" name="remember_me">
                         <span class="checkmark"></span>
                         Remember me
                     </label>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - HaVoC-EcoWATT</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/index.min.js"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-left">
+            <img src="{{ url_for('static', filename='images/ecowatt.png') }}" alt="EcoWATT Logo" class="logo">
+            <h1 class="brand">HaVoC-EcoWATT</h1>
+        </div>
+        <div class="header-center">
+            <h2 class="dashboard-title">Energy Dashboard</h2>
+        </div>
+        <div class="header-right">
+            <div class="user-info">
+                <span class="user-name">Welcome, {{ session.user_name or session.username or 'User' }}</span>
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <button class="logout-btn" onclick="window.location.href='{{ url_for('logout') }}';">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#appliances" class="nav-link">
+                            <i class="fas fa-plug"></i>
+                            <span>Appliances</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#analytics" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#scheduling" class="nav-link">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Smart Schedule</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reports" class="nav-link">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Dashboard Content -->
+        <main class="dashboard-content">
+            <!-- Overview Cards -->
+            <section class="overview-section">
+                <div class="overview-cards">
+                    <div class="card overview-card">
+                        <div class="card-header">
+                            <h3>Current Power</h3>
+                            <i class="fas fa-bolt card-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value" id="currentPower">2,450 W</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12% from yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card overview-card">
+                        <div class="card-header">
+                            <h3>Daily Usage</h3>
+                            <i class="fas fa-calendar-day card-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value" id="dailyUsage">18.5 kWh</div>
+                            <div class="metric-change negative">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>-5% from yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card overview-card">
+                        <div class="card-header">
+                            <h3>Monthly Cost</h3>
+                            <i class="fas fa-rupee-sign card-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value" id="monthlyCost">₹3,240</div>
+                            <div class="metric-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+8% from last month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card overview-card">
+                        <div class="card-header">
+                            <h3>Active Devices</h3>
+                            <i class="fas fa-power-off card-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value" id="activeDevices">7/12</div>
+                            <div class="metric-change neutral">
+                                <i class="fas fa-minus"></i>
+                                <span>Same as yesterday</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Dashboard Grid -->
+            <section class="dashboard-grid">
+                <!-- Real-time Usage Chart -->
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h3>Real-time Usage</h3>
+                        <div class="chart-controls">
+                            <button class="chart-btn active" data-period="24h">24H</button>
+                            <button class="chart-btn" data-period="7d">7D</button>
+                            <button class="chart-btn" data-period="30d">30D</button>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="usageChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Appliance Status Panel -->
+                <div class="card appliances-card">
+                    <div class="card-header">
+                        <h3>Appliance Status</h3>
+                        <button class="add-appliance-btn" onclick="showAddApplianceModal()">
+                            <i class="fas fa-plus"></i> Add Device
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div class="appliances-list" id="appliancesList">
+                            <!-- Appliances will be loaded dynamically -->
+                            <div class="appliance-item">
+                                <div class="appliance-info">
+                                    <div class="appliance-icon">
+                                        <i class="fas fa-snowflake"></i>
+                                    </div>
+                                    <div class="appliance-details">
+                                        <span class="appliance-name">Living Room AC</span>
+                                        <span class="appliance-status">Running • 22°C</span>
+                                    </div>
+                                </div>
+                                <div class="appliance-metrics">
+                                    <span class="power-usage">2,100W</span>
+                                    <div class="status-indicator on"></div>
+                                </div>
+                            </div>
+
+                            <div class="appliance-item">
+                                <div class="appliance-info">
+                                    <div class="appliance-icon">
+                                        <i class="fas fa-tint"></i>
+                                    </div>
+                                    <div class="appliance-details">
+                                        <span class="appliance-name">Water Heater</span>
+                                        <span class="appliance-status">Standby • 45°C</span>
+                                    </div>
+                                </div>
+                                <div class="appliance-metrics">
+                                    <span class="power-usage">12W</span>
+                                    <div class="status-indicator standby"></div>
+                                </div>
+                            </div>
+
+                            <div class="appliance-item">
+                                <div class="appliance-info">
+                                    <div class="appliance-icon">
+                                        <i class="fas fa-tv"></i>
+                                    </div>
+                                    <div class="appliance-details">
+                                        <span class="appliance-name">Smart TV</span>
+                                        <span class="appliance-status">Off • 28°C</span>
+                                    </div>
+                                </div>
+                                <div class="appliance-metrics">
+                                    <span class="power-usage">3W</span>
+                                    <div class="status-indicator off"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Energy Distribution -->
+                <div class="card distribution-card">
+                    <div class="card-header">
+                        <h3>Energy Distribution</h3>
+                        <select class="time-selector" id="distributionPeriod">
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                        </select>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recommendations Panel -->
+                <div class="card recommendations-card">
+                    <div class="card-header">
+                        <h3>Smart Recommendations</h3>
+                        <i class="fas fa-lightbulb card-icon"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="recommendations-list">
+                            <div class="recommendation-item high-priority">
+                                <div class="recommendation-icon">
+                                    <i class="fas fa-thermometer-half"></i>
+                                </div>
+                                <div class="recommendation-content">
+                                    <h4>Optimize AC Temperature</h4>
+                                    <p>Set AC to 24°C to save ₹45/day</p>
+                                    <span class="savings">Potential savings: ₹1,350/month</span>
+                                </div>
+                                <button class="apply-btn">Apply</button>
+                            </div>
+
+                            <div class="recommendation-item medium-priority">
+                                <div class="recommendation-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="recommendation-content">
+                                    <h4>Schedule Water Heater</h4>
+                                    <p>Run during off-peak hours (11 PM - 6 AM)</p>
+                                    <span class="savings">Potential savings: ₹280/month</span>
+                                </div>
+                                <button class="apply-btn">Schedule</button>
+                            </div>
+
+                            <div class="recommendation-item low-priority">
+                                <div class="recommendation-icon">
+                                    <i class="fas fa-plug"></i>
+                                </div>
+                                <div class="recommendation-content">
+                                    <h4>Reduce Standby Power</h4>
+                                    <p>Unplug unused devices to eliminate phantom load</p>
+                                    <span class="savings">Potential savings: ₹150/month</span>
+                                </div>
+                                <button class="apply-btn">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather & Rates -->
+                <div class="card weather-rates-card">
+                    <div class="card-header">
+                        <h3>Current Conditions</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="conditions-grid">
+                            <div class="condition-item">
+                                <div class="condition-icon">
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                                <div class="condition-details">
+                                    <span class="condition-label">Weather</span>
+                                    <span class="condition-value">32°C Sunny</span>
+                                </div>
+                            </div>
+
+                            <div class="condition-item">
+                                <div class="condition-icon">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </div>
+                                <div class="condition-details">
+                                    <span class="condition-label">Current Rate</span>
+                                    <span class="condition-value">₹5.80/kWh</span>
+                                </div>
+                            </div>
+
+                            <div class="condition-item">
+                                <div class="condition-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="condition-details">
+                                    <span class="condition-label">Peak Hours</span>
+                                    <span class="condition-value">6PM - 10PM</span>
+                                </div>
+                            </div>
+
+                            <div class="condition-item">
+                                <div class="condition-icon">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="condition-details">
+                                    <span class="condition-label">CO₂ Today</span>
+                                    <span class="condition-value">12.3 kg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Goals Progress -->
+                <div class="card goals-card">
+                    <div class="card-header">
+                        <h3>Monthly Goals</h3>
+                        <button class="settings-btn">
+                            <i class="fas fa-cog"></i>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div class="goals-list">
+                            <div class="goal-item">
+                                <div class="goal-info">
+                                    <span class="goal-title">Energy Savings</span>
+                                    <span class="goal-target">Target: 15% reduction</span>
+                                </div>
+                                <div class="goal-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 73%"></div>
+                                    </div>
+                                    <span class="progress-text">73%</span>
+                                </div>
+                            </div>
+
+                            <div class="goal-item">
+                                <div class="goal-info">
+                                    <span class="goal-title">Cost Reduction</span>
+                                    <span class="goal-target">Target: ₹500 savings</span>
+                                </div>
+                                <div class="goal-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 45%"></div>
+                                    </div>
+                                    <span class="progress-text">₹225</span>
+                                </div>
+                            </div>
+
+                            <div class="goal-item">
+                                <div class="goal-info">
+                                    <span class="goal-title">Carbon Footprint</span>
+                                    <span class="goal-target">Target: 20% reduction</span>
+                                </div>
+                                <div class="goal-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 82%"></div>
+                                    </div>
+                                    <span class="progress-text">82%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Add Appliance Modal -->
+    <div id="addApplianceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Appliance</h3>
+                <button class="close-btn" onclick="closeAddApplianceModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addApplianceForm">
+                    <div class="form-group">
+                        <label for="applianceName">Appliance Name</label>
+                        <input type="text" id="applianceName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="applianceType">Type</label>
+                        <select id="applianceType" name="type" required>
+                            <option value="">Select Type</option>
+                            <option value="air_conditioner">Air Conditioner</option>
+                            <option value="refrigerator">Refrigerator</option>
+                            <option value="washing_machine">Washing Machine</option>
+                            <option value="water_heater">Water Heater</option>
+                            <option value="television">Television</option>
+                            <option value="microwave">Microwave</option>
+                            <option value="dishwasher">Dishwasher</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="powerRating">Power Rating (Watts)</label>
+                        <input type="number" id="powerRating" name="power_rating" min="1" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" onclick="closeAddApplianceModal()">Cancel</button>
+                        <button type="submit" class="submit-btn">Add Appliance</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Real-time Status Indicator -->
+    <div class="realtime-indicator">
+        <div class="indicator-dot"></div>
+        <span>Live Updates</span>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Pass session data to JavaScript
+        window.sessionData = {
+            userId: {{ session.user_id }},
+            username: "{{ session.username or '' }}",
+            userDisplayName: "{{ session.user_name or session.username or 'User' }}"
+        };
+    </script>
+    <script src="{{ url_for('static', filename='dashboard.js') }}?v=2"></script>
+</body>
+</html>
